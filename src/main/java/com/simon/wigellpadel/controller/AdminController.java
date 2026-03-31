@@ -11,6 +11,9 @@ import com.simon.wigellpadel.repository.AddressRepository;
 import com.simon.wigellpadel.service.CustomerService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import org.apache.juli.logging.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +28,7 @@ public class AdminController {
 
     private final CustomerService customerService;
     private final AddressRepository addressRepository;
+    private final Logger logger  = LoggerFactory.getLogger(AdminController.class);
 
     public AdminController(CustomerService customerService,  AddressRepository addressRepository) {
         this.customerService   = customerService;
@@ -49,17 +53,23 @@ public class AdminController {
     public ResponseEntity<CustomerDto> postAddress(@PathVariable Long customerId, @Valid @RequestBody AddressDto dto) {
 
         Address address = AddressMapper.fromDto(dto);
-
         Customer customer = customerService.findCustomerEntityById(customerId);
 
         if(customer.getAddresses().isEmpty()) {
-            addressRepository.save(address);
             customer.getAddresses().add(address);
             address.setCustomer(customer);
-
-
+            addressRepository.save(address);
+            logger.info("Added address for customer id: {}", customerId);
         }
 
-        return ResponseEntity.ok().body( customerService.save( customer ) );
+        CustomerDto response = customerService.save(customer);
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/../customers/{customerId}")
+                .buildAndExpand(customerId)
+                .toUri();
+
+        return ResponseEntity.created(location).body(response);
     }
 }
