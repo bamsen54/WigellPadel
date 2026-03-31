@@ -14,6 +14,12 @@ import java.util.Map;
 @ControllerAdvice
 public class ApiExceptionHandler {
 
+    @ExceptionHandler(CustomerDoesNotExistException.class)
+    public ResponseEntity<Map<String, Object>> handleCustomerNotExisting(CustomerDoesNotExistException ex, HttpServletRequest request) {
+        String fullPath = request.getMethod() + " " + request.getRequestURI();
+        return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage(), fullPath);
+    }
+
     @ExceptionHandler(UsernameNotAvailableException.class)
     public ResponseEntity<Map<String, Object>> handleUserConflict(UsernameNotAvailableException ex, HttpServletRequest request) {
         String fullPath = request.getMethod() + " " + request.getRequestURI();

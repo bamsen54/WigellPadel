@@ -1,16 +1,22 @@
 package com.simon.wigellpadel.controller;
 
+import com.simon.wigellpadel.dto.AddressDto;
 import com.simon.wigellpadel.dto.CustomerDto;
-import com.simon.wigellpadel.dto.CustomerPostDto;
+import com.simon.wigellpadel.dto.PostCustomerDto;
+import com.simon.wigellpadel.entity.Address;
 import com.simon.wigellpadel.entity.Customer;
-import com.simon.wigellpadel.exception.UsernameNotAvailableException;
+import com.simon.wigellpadel.mapper.AddressMapper;
 import com.simon.wigellpadel.mapper.CustomerMapper;
+import com.simon.wigellpadel.repository.AddressRepository;
 import com.simon.wigellpadel.service.CustomerService;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -18,26 +24,42 @@ import java.util.List;
 public class AdminController {
 
     private final CustomerService customerService;
+    private final AddressRepository addressRepository;
 
-
-    public AdminController(CustomerService customerService) {
-        this.customerService = customerService;
-    }
-
-    @GetMapping
-    public ResponseEntity<List<CustomerDto>> getAllCustomers(){
-
-        List<CustomerDto> customerDtos = customerService.getAllCustomers();
-
-        return ResponseEntity.status(HttpStatus.OK).body(customerDtos);
+    public AdminController(CustomerService customerService,  AddressRepository addressRepository) {
+        this.customerService   = customerService;
+        this.addressRepository = addressRepository;
     }
 
     @PostMapping
-    public ResponseEntity<CustomerDto> addCustomer(@Valid @RequestBody CustomerPostDto dto){
+    public ResponseEntity<CustomerDto> postCustomer(@Valid @RequestBody PostCustomerDto dto) {
+        CustomerDto response = customerService.save(dto);
 
-        if(customerService.customerWitHUsernameAlreadyExists(dto.username(), null))
-            throw new UsernameNotAvailableException("Customer with username: " + dto.username() + " already exists");
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(response.id())
+                .toUri();
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(customerService.addCustomer(dto));
+        return ResponseEntity.created(location).body(response);
+    }
+
+    @Transactional
+    @PostMapping("/{customerId}/addresses")
+    public ResponseEntity<CustomerDto> postAddress(@PathVariable Long customerId, @Valid @RequestBody AddressDto dto) {
+
+        Address address = AddressMapper.fromDto(dto);
+
+        Customer customer = customerService.findCustomerEntityById(customerId);
+
+        if(customer.getAddresses().isEmpty()) {
+            addressRepository.save(address);
+            customer.getAddresses().add(address);
+            address.setCustomer(customer);
+
+
+        }
+
+        return ResponseEntity.ok().body( customerService.save( customer ) );
     }
 }

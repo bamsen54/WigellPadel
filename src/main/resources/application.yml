@@ -8,7 +8,7 @@ spring:
     password: root
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         jdbc:
@@ -30,4 +30,4 @@ management:
 logging:
   level:
     root: WARN
-    com.wigell.padel: INFO
+    com.simon.wigellpadel: INFO

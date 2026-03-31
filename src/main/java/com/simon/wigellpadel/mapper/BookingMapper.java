@@ -21,4 +21,18 @@ public class BookingMapper {
                 booking.getNumberOfPlayers()
         );
     }
+
+    public static Booking fromDto(BookingDto bookingDto) {
+        if (bookingDto == null) return null;
+
+        Booking booking = new Booking();
+        booking.setId(bookingDto.id());
+        booking.setNumberOfPlayers(bookingDto.numberOfPlayers());
+        booking.setBookingDate(bookingDto.bookingDate());
+        booking.setStartTime(bookingDto.startTime());
+        booking.setTotalPriceSek(bookingDto.totalPriceSek());
+        booking.setTotalPriceEur(bookingDto.totalPriceEur());
+
+        return booking;
+    }
 }
