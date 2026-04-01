@@ -5,6 +5,7 @@ import com.simon.wigellpadel.dto.CustomerDto;
 import com.simon.wigellpadel.dto.PostCustomerDto;
 import com.simon.wigellpadel.entity.Address;
 import com.simon.wigellpadel.entity.Customer;
+import com.simon.wigellpadel.exception.CustomerAlreadyHasAnAddressException;
 import com.simon.wigellpadel.mapper.AddressMapper;
 import com.simon.wigellpadel.mapper.CustomerMapper;
 import com.simon.wigellpadel.repository.AddressRepository;
@@ -35,6 +36,11 @@ public class AdminController {
         this.addressRepository = addressRepository;
     }
 
+    @GetMapping
+    public ResponseEntity<List<CustomerDto>> getAllCustomers() {
+        return ResponseEntity.status(HttpStatus.OK).body(customerService.findAllCustomers());
+    }
+
     @PostMapping
     public ResponseEntity<CustomerDto> postCustomer(@Valid @RequestBody PostCustomerDto dto) {
         CustomerDto response = customerService.save(dto);
@@ -45,6 +51,8 @@ public class AdminController {
                 .buildAndExpand(response.id())
                 .toUri();
 
+
+        logger.info("Created user with id " + response.id() + "@" + location);
         return ResponseEntity.created(location).body(response);
     }
 
@@ -59,7 +67,13 @@ public class AdminController {
             customer.getAddresses().add(address);
             address.setCustomer(customer);
             addressRepository.save(address);
-            logger.info("Added address for customer id: {}", customerId);
+        }
+
+        else {
+            logger.warn("Customer "  + customer.getId() + " aldready has an address");
+            throw new CustomerAlreadyHasAnAddressException(
+                    "Customr " + customer.getId() + " already has address: " + customer.getAddresses().getFirst().toString()
+            );
         }
 
         CustomerDto response = customerService.save(customer);
@@ -70,6 +84,15 @@ public class AdminController {
                 .buildAndExpand(customerId)
                 .toUri();
 
+        logger.info("Added address for customer id: {} @" + location, customerId);
+
+
         return ResponseEntity.created(location).body(response);
     }
+
+    //@DeleteMapping("/{customerId}/addresses/{addressId}")
+    //public ResponseEntity<?> deleteAddress(@PathVariable Long customerId, @PathVariable Long addressId) {
+
+
+    //}
 }

@@ -49,4 +49,13 @@ public class Address {
 
     public Customer getCustomer() { return customer; }
     public void setCustomer(Customer customer) { this.customer = customer; }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append(this.street).append(", ")
+          .append(this.postalCode).append(", ")
+          .append(this.city).append(" ");
+        return sb.toString();
+    }
 }

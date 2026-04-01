@@ -34,6 +34,7 @@ public class CustomerMapper {
         return new CustomerDto(
                 customer.getId(),
                 customer.getUsername(),
+                customer.getRole(),
                 customer.getFirstName(),
                 customer.getLastName(),
                 addressDtos,
@@ -50,7 +51,6 @@ public class CustomerMapper {
         customer.setFirstName(customerDto.firstName());
         customer.setLastName(customerDto.lastName());
 
-        // Mappa addresses (0 eller 1 adress)
         if (customerDto.addresses() != null && !customerDto.addresses().isEmpty()) {
             Address address = AddressMapper.fromDto(customerDto.addresses().get(0));
             address.setCustomer(customer);
@@ -59,7 +59,6 @@ public class CustomerMapper {
             customer.setAddresses(new ArrayList<>());
         }
 
-        // Mappa bookings
         if (customerDto.bookings() != null && !customerDto.bookings().isEmpty()) {
             List<Booking> bookings = customerDto.bookings().stream()
                     .map(BookingMapper::fromDto)
@@ -80,6 +79,7 @@ public class CustomerMapper {
 
         customer.setUsername(dto.username());
         customer.setPassword(dto.password());
+        customer.setRole(dto.role());
         customer.setFirstName(dto.firstName());
         customer.setLastName(dto.lastName());
 

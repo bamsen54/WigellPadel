@@ -6,7 +6,13 @@
 Skapar en ny kund.
 
 Request:
-{"username":"simon","password":"hejsan123","firstName":"Simon","lastName":"Wigell","email":"simon@wigell.se"}
+{
+    "username":"simon",
+    "password":"hejsan123", 
+    "role": "ADMIN", 
+    "firstName":"Simon",
+    "lastName":"Wigell"
+}
 
 Response (201 Created):
 {"id":1,"username":"simon","firstName":"Simon","lastName":"Wigell","addresses":[],"bookings":[]}
@@ -21,7 +27,11 @@ Response (200 OK):
 Lägger till adress för en kund.
 
 Request:
-{"street":"Storgatan 1","city":"Stockholm","postalCode":"111 22"}
+{
+    "street":"Storgatan 1",
+    "city":"Stockholm",
+    "postalCode":"111 22"
+}
 
 Response (201 Created):
 {"id":1,"username":"simon","firstName":"Simon","lastName":"Wigell","addresses":[{"id":1,"street":"Storgatan 1","city":"Stockholm","postalCode":"111 22"}],"bookings":[]}

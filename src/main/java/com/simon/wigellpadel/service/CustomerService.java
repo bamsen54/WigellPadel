@@ -35,6 +35,10 @@ public class CustomerService {
                 .orElseThrow(() -> new CustomerDoesNotExistException(id));
     }
 
+    public List<CustomerDto> findAllCustomers() {
+        return customerRepository.findAll().stream().map(CustomerMapper::toDto).toList();
+    }
+
     public CustomerDto save(PostCustomerDto dto) {
 
         logger.info("Attemping creation of customer with username: {}", dto.username());

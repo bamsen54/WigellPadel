@@ -26,6 +26,12 @@ public class ApiExceptionHandler {
         return buildResponse(HttpStatus.CONFLICT, ex.getMessage(), fullPath);
     }
 
+    @ExceptionHandler(CustomerAlreadyHasAnAddressException.class)
+    public ResponseEntity<Map<String, Object>> handleUserConflict(CustomerAlreadyHasAnAddressException ex, HttpServletRequest request) {
+        String fullPath = request.getMethod() + " " + request.getRequestURI();
+        return buildResponse(HttpStatus.CONFLICT, ex.getMessage(), fullPath);
+    }
+
     private ResponseEntity<Map<String, Object>> buildResponse(HttpStatus status, String message, String path) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
