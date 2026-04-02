@@ -88,26 +88,26 @@ Creates address for customer with id: customerId
 Request:
 ```json
 {
-  "street": "Javavägen 1",
-  "postalCode": "11111",
-  "city": "Jakarta"
+  "street"     : "Javavägen 1",
+  "postalCode" : "11111",
+  "city"       : "Jakarta"
 }
 ```
 
 Response (200 OK):
 ```json
 {
-  "id": 1,
-  "username": "bamsen54",
-  "role": "USER",
-  "firstName": "Simon",
-  "lastName": "Toivola",
-  "addresses": [
+  "id"        : 1,
+  "username"  : "bamsen54",
+  "role"      : "USER",
+  "firstName" : "Simon",
+  "lastName"  : "Toivola",
+  "addresses" : [
     {
-      "id": 1,
-      "street": "Javavägen 1",
-      "postalCode": "11111",
-      "city": "Jakarta"
+      "id"         : 1,
+      "street"     : "Javavägen 1",
+      "postalCode" : "11111",
+      "city"       : "Jakarta"
     }
   ],
     

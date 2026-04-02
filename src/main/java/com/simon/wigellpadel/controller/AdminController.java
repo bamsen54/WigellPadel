@@ -52,7 +52,7 @@ public class AdminController {
                 .buildAndExpand(response.id())
                 .toUri();
 
-        logger.info("Created user with id " + response.id() + "@" + location);
+        logger.info("Created user with id " + response.id() + " @" + location);
         return ResponseEntity.created(location).body(response);
     }
 
