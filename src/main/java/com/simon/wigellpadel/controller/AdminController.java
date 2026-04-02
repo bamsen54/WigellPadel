@@ -3,6 +3,7 @@ package com.simon.wigellpadel.controller;
 import com.simon.wigellpadel.dto.AddressDto;
 import com.simon.wigellpadel.dto.CustomerDto;
 import com.simon.wigellpadel.dto.PostCustomerDto;
+import com.simon.wigellpadel.dto.PutCustomerDto;
 import com.simon.wigellpadel.entity.Address;
 import com.simon.wigellpadel.entity.Customer;
 import com.simon.wigellpadel.exception.AddressDoesNotExistException;
@@ -51,9 +52,14 @@ public class AdminController {
                 .buildAndExpand(response.id())
                 .toUri();
 
-
         logger.info("Created user with id " + response.id() + "@" + location);
         return ResponseEntity.created(location).body(response);
+    }
+
+    @PutMapping("/{customerId}")
+    public ResponseEntity<CustomerDto> putCustomer(@PathVariable Long customerId, @Valid @RequestBody PutCustomerDto dto) {
+        CustomerDto updated = customerService.update(customerId, dto);
+        return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/{customerId}")

@@ -2,6 +2,7 @@ package com.simon.wigellpadel.service;
 
 import com.simon.wigellpadel.dto.CustomerDto;
 import com.simon.wigellpadel.dto.PostCustomerDto;
+import com.simon.wigellpadel.dto.PutCustomerDto;
 import com.simon.wigellpadel.entity.Customer;
 import com.simon.wigellpadel.exception.CustomerDoesNotExistException;
 import com.simon.wigellpadel.exception.UsernameNotAvailableException;
@@ -69,6 +70,22 @@ public class CustomerService {
         logger.info("Created new customer with id: {} and username: {}", savedCustomer.getId(), savedCustomer.getUsername());
 
         return CustomerMapper.toDto(savedCustomer);
+    }
+
+    @Transactional
+    public CustomerDto update(Long id, PutCustomerDto dto) {
+        Customer customer = customerRepository.findById(id).orElseThrow(() -> new CustomerDoesNotExistException(id));
+
+        customer.setUsername(dto.username());
+        customer.setPassword(dto.password());
+        customer.setFirstName(dto.firstName());
+        customer.setLastName(dto.lastName());
+        customer.setRole(dto.role());
+
+        Customer saved = customerRepository.save(customer);
+        logger.info("Updated customer with id: {}", id);
+
+        return CustomerMapper.toDto(saved);
     }
 
     public void delete(Long id) {

@@ -12,8 +12,8 @@ public class AddressMapper {
         return new AddressDto(
                 address.getId(),
                 address.getStreet(),
-                address.getCity(),
-                address.getPostalCode()
+                address.getPostalCode(),
+                address.getCity()
         );
     }
 
