@@ -71,6 +71,13 @@ public class CustomerService {
         return CustomerMapper.toDto(savedCustomer);
     }
 
+    public void delete(Long id) {
+
+        customerRepository.findById(id).orElseThrow(() -> new CustomerDoesNotExistException(id));
+
+        customerRepository.deleteById(id);
+    }
+
     public boolean customerWitHUsernameAlreadyExists(String username, Long id) {
 
         List<Customer> customers = customerRepository.findAll();

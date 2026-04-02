@@ -5,14 +5,12 @@ import com.simon.wigellpadel.dto.CustomerDto;
 import com.simon.wigellpadel.dto.PostCustomerDto;
 import com.simon.wigellpadel.entity.Address;
 import com.simon.wigellpadel.entity.Customer;
-import com.simon.wigellpadel.exception.CustomerAlreadyHasAnAddressException;
+import com.simon.wigellpadel.exception.AddressDoesNotExistException;
 import com.simon.wigellpadel.mapper.AddressMapper;
-import com.simon.wigellpadel.mapper.CustomerMapper;
-import com.simon.wigellpadel.repository.AddressRepository;
+import com.simon.wigellpadel.service.AddressService;
 import com.simon.wigellpadel.service.CustomerService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import org.apache.juli.logging.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -28,12 +26,14 @@ import java.util.List;
 public class AdminController {
 
     private final CustomerService customerService;
-    private final AddressRepository addressRepository;
+    private final AddressService addressService;
+    //private final AddressRepository addressRepository;
+
     private final Logger logger  = LoggerFactory.getLogger(AdminController.class);
 
-    public AdminController(CustomerService customerService,  AddressRepository addressRepository) {
-        this.customerService   = customerService;
-        this.addressRepository = addressRepository;
+    public AdminController(CustomerService customerService,  AddressService addressService) {
+        this.customerService = customerService;
+        this.addressService  = addressService;
     }
 
     @GetMapping
@@ -56,6 +56,14 @@ public class AdminController {
         return ResponseEntity.created(location).body(response);
     }
 
+    @DeleteMapping("/{customerId}")
+    public ResponseEntity<CustomerDto> deleteCustomer(@PathVariable Long customerId) {
+        customerService.delete(customerId);
+        logger.info("Deleted user with id " + customerId);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
     @Transactional
     @PostMapping("/{customerId}/addresses")
     public ResponseEntity<CustomerDto> postAddress(@PathVariable Long customerId, @Valid @RequestBody AddressDto dto) {
@@ -63,36 +71,40 @@ public class AdminController {
         Address address = AddressMapper.fromDto(dto);
         Customer customer = customerService.findCustomerEntityById(customerId);
 
-        if(customer.getAddresses().isEmpty()) {
-            customer.getAddresses().add(address);
-            address.setCustomer(customer);
-            addressRepository.save(address);
-        }
-
-        else {
-            logger.warn("Customer "  + customer.getId() + " aldready has an address");
-            throw new CustomerAlreadyHasAnAddressException(
-                    "Customr " + customer.getId() + " already has address: " + customer.getAddresses().getFirst().toString()
-            );
-        }
+        customer.getAddresses().add(address);
+        address.setCustomer(customer);
+        addressService.postAddress(address);
 
         CustomerDto response = customerService.save(customer);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
-                .path("/../customers/{customerId}")
+                .path("")
                 .buildAndExpand(customerId)
                 .toUri();
 
         logger.info("Added address for customer id: {} @" + location, customerId);
 
-
         return ResponseEntity.created(location).body(response);
     }
 
-    //@DeleteMapping("/{customerId}/addresses/{addressId}")
-    //public ResponseEntity<?> deleteAddress(@PathVariable Long customerId, @PathVariable Long addressId) {
+    @DeleteMapping("/{customerId}/addresses/{addressId}")
+    public ResponseEntity<?> deleteAddress(@PathVariable Long customerId, @PathVariable Long addressId) {
 
+        Customer customer = customerService.findCustomerEntityById(customerId);
+        Address address   = customer.getAddresses().stream()
+                                    .filter(e -> e.getId()
+                                    .equals(addressId))
+                                    .findFirst()
+                                    .orElseThrow(() -> new AddressDoesNotExistException(
+                                        "Customer with id " + customerId + " does not have an address with id " + addressId
+                                    ));
 
-    //}
+        customer.getAddresses().remove(address);
+        addressService.deleteAddress(address);
+
+        logger.info("Deleted address with id: {} for customer id: {}", addressId, customerId);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }

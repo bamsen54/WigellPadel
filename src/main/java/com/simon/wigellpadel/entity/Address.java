@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "addresses")
+@Table(name = "addresses", uniqueConstraints = {
+    @UniqueConstraint(name = "unique_customer_address",  columnNames = {"customer_id", "street", "city", "postal_code"})
+})
 public class Address {
 
     @Id
@@ -23,7 +25,7 @@ public class Address {
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "customer_id", unique = true, nullable = false)
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
     public Address() {}
