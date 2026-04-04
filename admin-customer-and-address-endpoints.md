@@ -1,6 +1,6 @@
 # Wigell Padel API
 
-## ADMIN Endpoints
+## ADMIN CUSTOMER AND ADDRESS Endpoints
 
 ### GET /api/v1/customers
 Gets all customers.
@@ -88,13 +88,13 @@ Creates address for customer with id: customerId
 Request:
 ```json
 {
-  "street"     : "Javavägen 1",
-  "postalCode" : "11111",
+  "street"     : "Javastreet 24",
+  "postalCode" : "0xCAFEBABE",
   "city"       : "Jakarta"
 }
 ```
 
-Response (200 OK):
+Response (201 CREATED):
 ```json
 {
   "id"        : 1,
@@ -105,8 +105,8 @@ Response (200 OK):
   "addresses" : [
     {
       "id"         : 1,
-      "street"     : "Javavägen 1",
-      "postalCode" : "11111",
+      "street"     : "Javastreet 24",
+      "postalCode" : "0xCAFEBABE",
       "city"       : "Jakarta"
     }
   ],

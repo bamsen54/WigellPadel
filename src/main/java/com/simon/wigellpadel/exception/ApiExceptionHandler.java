@@ -38,6 +38,18 @@ public class ApiExceptionHandler {
         return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage(), fullPath);
     }
 
+    @ExceptionHandler(CourtDoesNotExistException.class)
+    public ResponseEntity<Map<String, Object>> handleUserConflict(CourtDoesNotExistException ex, HttpServletRequest request) {
+        String fullPath = request.getMethod() + " " + request.getRequestURI();
+        return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage(), fullPath);
+    }
+
+    @ExceptionHandler(CourtNameNotAvailableException.class)
+    public ResponseEntity<Map<String, Object>> handleUserConflict(CourtNameNotAvailableException ex, HttpServletRequest request) {
+        String fullPath = request.getMethod() + " " + request.getRequestURI();
+        return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage(), fullPath);
+    }
+
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<Map<String, Object>> handleDataIntegrityViolation(DataIntegrityViolationException ex, HttpServletRequest request) {
         String fullPath = request.getMethod() + " " + request.getRequestURI();

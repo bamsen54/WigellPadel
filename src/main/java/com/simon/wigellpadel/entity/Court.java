@@ -44,4 +44,15 @@ public class Court {
     public void setPricePerHourEur(double pricePerHourEur) { this.pricePerHourEur = pricePerHourEur; }
     public List<Booking> getBookings() { return bookings; }
     public void setBookings(List<Booking> bookings) { this.bookings = bookings; }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Court{");
+        sb.append("id=").append(id);
+        sb.append(", courtName='").append(courtName).append('\'');
+        sb.append(", pricePerHourSek=").append(pricePerHourSek);
+        sb.append(", pricePerHourEur=").append(pricePerHourEur);
+        sb.append('}');
+        return sb.toString();
+    }
 }

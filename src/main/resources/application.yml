@@ -8,7 +8,7 @@ spring:
     password: root
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     properties:
       hibernate:
         jdbc:
@@ -31,3 +31,8 @@ logging:
   level:
     root: ERROR
     com.simon.wigellpadel: INFO
+
+app:
+  exchange:
+    sek-to-eur: 0.1
+    eur-to-sek: 10.0

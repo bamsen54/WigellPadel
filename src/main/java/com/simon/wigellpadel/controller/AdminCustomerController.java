@@ -1,9 +1,6 @@
 package com.simon.wigellpadel.controller;
 
-import com.simon.wigellpadel.dto.AddressDto;
-import com.simon.wigellpadel.dto.CustomerDto;
-import com.simon.wigellpadel.dto.PostCustomerDto;
-import com.simon.wigellpadel.dto.PutCustomerDto;
+import com.simon.wigellpadel.dto.*;
 import com.simon.wigellpadel.entity.Address;
 import com.simon.wigellpadel.entity.Customer;
 import com.simon.wigellpadel.exception.AddressDoesNotExistException;
@@ -24,15 +21,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/customers")
-public class AdminController {
+public class AdminCustomerController {
 
     private final CustomerService customerService;
     private final AddressService addressService;
-    //private final AddressRepository addressRepository;
 
-    private final Logger logger  = LoggerFactory.getLogger(AdminController.class);
+    private final Logger logger  = LoggerFactory.getLogger(AdminCustomerController.class);
 
-    public AdminController(CustomerService customerService,  AddressService addressService) {
+    public AdminCustomerController(CustomerService customerService, AddressService addressService) {
         this.customerService = customerService;
         this.addressService  = addressService;
     }
@@ -52,7 +48,6 @@ public class AdminController {
                 .buildAndExpand(response.id())
                 .toUri();
 
-        logger.info("Created user with id " + response.id() + " @" + location);
         return ResponseEntity.created(location).body(response);
     }
 
@@ -89,7 +84,6 @@ public class AdminController {
                 .buildAndExpand(customerId)
                 .toUri();
 
-        logger.info("Added address for customer id: {} @" + location, customerId);
 
         return ResponseEntity.created(location).body(response);
     }
@@ -109,7 +103,6 @@ public class AdminController {
         customer.getAddresses().remove(address);
         addressService.deleteAddress(address);
 
-        logger.info("Deleted address with id: {} for customer id: {}", addressId, customerId);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
