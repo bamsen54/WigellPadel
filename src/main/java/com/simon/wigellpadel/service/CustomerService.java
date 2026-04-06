@@ -74,7 +74,7 @@ public class CustomerService {
     @Transactional
     public CustomerDto update(Long id, PutCustomerDto dto) {
         Customer customer = customerRepository.findById(id).orElseThrow(() -> {
-            logger.error("Customer with id {} not found", id);
+            logger.warn("Customer with id {} not found", id);
             throw new CustomerDoesNotExistException(id);
         });
 

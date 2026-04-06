@@ -5,7 +5,7 @@ public class CustomerDoesNotExistException extends RuntimeException {
         super(message);
     }
     public CustomerDoesNotExistException(Long id) {
-        super( "Customer with id " + id + " does not exist" );
+        super( "Customer with id: " + id + " does not exist" );
     }
 
 }

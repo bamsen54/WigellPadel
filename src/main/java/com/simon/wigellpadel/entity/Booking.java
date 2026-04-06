@@ -2,6 +2,7 @@ package com.simon.wigellpadel.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Entity
 @Table(name = "bookings")
@@ -11,6 +12,9 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+
+    @Column(name = "booking_reference", unique = true, nullable = false, updatable = false)
+    private final String bookingReference = UUID.randomUUID().toString().substring(0, 18);
 
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
@@ -47,6 +51,7 @@ public class Booking {
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
+    public String getBookingReference() { return this.bookingReference; }
     public Customer getCustomer() { return customer; }
     public void setCustomer(Customer customer) { this.customer = customer; }
     public Court getCourt() { return court; }

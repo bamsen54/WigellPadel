@@ -1,7 +1,10 @@
 package com.simon.wigellpadel.mapper;
 
 import com.simon.wigellpadel.dto.BookingDto;
+import com.simon.wigellpadel.dto.PostBookingDto;
 import com.simon.wigellpadel.entity.Booking;
+import com.simon.wigellpadel.entity.Court;
+import com.simon.wigellpadel.entity.Customer;
 
 public class BookingMapper {
 
@@ -12,10 +15,13 @@ public class BookingMapper {
 
         return new BookingDto(
                 booking.getId(),
-                booking.getCourt() != null ? booking.getCourt().getId() : null,
-                booking.getCourt() != null ? booking.getCourt().getCourtName() : "Unknown Court",
+                booking.getBookingReference(),
+                booking.getCustomer().getId(),
+                booking.getCustomer().getUsername(),
+                booking.getCourt().getId(),
+                booking.getCourt().getCourtName(),
                 booking.getBookingDate(),
-                booking.getStartTime(), // Integer 0-23
+                booking.getStartTime(),
                 booking.getTotalPriceSek(),
                 booking.getTotalPriceEur(),
                 booking.getNumberOfPlayers()
@@ -32,6 +38,19 @@ public class BookingMapper {
         booking.setStartTime(bookingDto.startTime());
         booking.setTotalPriceSek(bookingDto.totalPriceSek());
         booking.setTotalPriceEur(bookingDto.totalPriceEur());
+
+        return booking;
+    }
+
+    public static Booking fromPostBookingDto(PostBookingDto dto, Customer customer, Court court) {
+        if (dto == null) return null;
+
+        Booking booking = new Booking();
+        booking.setCustomer(customer);
+        booking.setCourt(court);
+        booking.setBookingDate(dto.bookingDate());
+        booking.setStartTime(dto.startTime());
+        booking.setNumberOfPlayers(dto.numberOfPlayers());
 
         return booking;
     }

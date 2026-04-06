@@ -22,7 +22,6 @@ public class CourtService {
     private final CourtRepository courtRepository;
     private static final Logger logger = LoggerFactory.getLogger(CourtService.class);
 
-
     @Value("${app.exchange.sek-to-eur}")
     private double exchangeSekToEur;
 
@@ -39,8 +38,12 @@ public class CourtService {
     }
 
     public CourtDto findCourtById(Long courtId) {
-        Court court = courtRepository.findById(courtId).orElseThrow(() -> new RuntimeException("court not found")); // TODO fix custom exception
+        Court court = courtRepository.findById(courtId).orElseThrow(() -> new CourtDoesNotExistException(courtId));
         return  CourtMapper.toDto(court);
+    }
+
+    public Court findCourtEntityById(Long courtId) {
+        return courtRepository.findById(courtId).orElseThrow(() -> new CourtDoesNotExistException(courtId));
     }
 
     @Transactional

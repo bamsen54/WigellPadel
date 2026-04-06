@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.awt.print.Book;
 import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -48,6 +49,12 @@ public class ApiExceptionHandler {
     public ResponseEntity<Map<String, Object>> handleUserConflict(CourtNameNotAvailableException ex, HttpServletRequest request) {
         String fullPath = request.getMethod() + " " + request.getRequestURI();
         return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage(), fullPath);
+    }
+
+    @ExceptionHandler(BookingConflictException.class)
+    public ResponseEntity<Map<String, Object>> handleUserConflict(BookingConflictException ex, HttpServletRequest request) {
+        String fullPath = request.getMethod() + " " + request.getRequestURI();
+        return buildResponse(HttpStatus.CONFLICT, ex.getMessage(), fullPath);
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
