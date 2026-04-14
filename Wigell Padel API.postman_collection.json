@@ -1,0 +1,831 @@
+{
+  "info": {
+    "_postman_id": "a26500ff-6563-4a0b-b23e-68b8e26171fb",
+    "name": "Wigell Padel API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "52671987",
+    "_collection_link": "https://go.postman.co/collection/52671987-a26500ff-6563-4a0b-b23e-68b8e26171fb?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Bookings",
+      "item": [
+        {
+          "name": "USER get availability for court at a specific data",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "u",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "1234",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8584/api/v1/availability?date=2026-04-12&courtId=1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8584",
+              "path": [
+                "api",
+                "v1",
+                "availability"
+              ],
+              "query": [
+                {
+                  "key": "date",
+                  "value": "2026-04-12"
+                },
+                {
+                  "key": "courtId",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "USER create booking",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "u",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "1234",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"customerId\"       : 1,\r\n  \"courtId\"          : 1,\r\n  \"bookingDate\"      : \"2026-04-06\",\r\n  \"startTime\"        : 13,\r\n  \"numberOfPlayers\"  : 4\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8584/api/v1/bookings",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8584",
+              "path": [
+                "api",
+                "v1",
+                "bookings"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "USER update booking",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "u",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "1234",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \r\n  \"bookingDate\"     : \"2026-04-30\",\r\n  \"startTime\"       : 14,\r\n  \"numberOfPlayers\" : 5,\r\n  \"courtId\"         : 2\r\n  \r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8584/api/v1/bookings/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8584",
+              "path": [
+                "api",
+                "v1",
+                "bookings",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "USER get alla bookings for user with id: customerId",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "u",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "1234",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8584/api/v1/bookings?customerId=2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8584",
+              "path": [
+                "api",
+                "v1",
+                "bookings"
+              ],
+              "query": [
+                {
+                  "key": "customerId",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "ADMIN get all bookings",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "a",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "1234",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8584/api/v1/bookings",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8584",
+              "path": [
+                "api",
+                "v1",
+                "bookings"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "ADMIN get a booking by id",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "a",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "1234",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "http://localhost:8584/api/v1/bookings/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8584",
+              "path": [
+                "api",
+                "v1",
+                "bookings",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "ADMIN delete booking",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "a",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "1234",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8584/api/v1/bookings/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8584",
+              "path": [
+                "api",
+                "v1",
+                "bookings",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Customers",
+      "item": [
+        {
+          "name": "ADMIN get all customers",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "a",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "1234",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8584/api/v1/customers",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8584",
+              "path": [
+                "api",
+                "v1",
+                "customers"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "ADMIN add new Customer",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "a",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "1234",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\"  : \"simon\",\r\n  \"password\"  : \"1234\", \r\n  \"role\"      : \"ADMIN\",\r\n  \"firstName\" : \"Simon\",\r\n  \"lastName\"  : \"Toivola\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8584/api/v1/customers",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8584",
+              "path": [
+                "api",
+                "v1",
+                "customers"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "ADMIN delete customer",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "a",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "1234",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8584/api/v1/customers/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8584",
+              "path": [
+                "api",
+                "v1",
+                "customers",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "ADMIN update customer",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "a",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "1234",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\"  : \"bamsen54\",\r\n  \"password\"  : \"1234\", \r\n  \"role\"      : \"ADMIN\",\r\n  \"firstName\" : \"Simon\",\r\n  \"lastName\"  : \"Toivola\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8584/api/v1/customers/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8584",
+              "path": [
+                "api",
+                "v1",
+                "customers",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "ADMIN create address for customer",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "a",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "1234",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"street\" : \"Javastreet 24\",\r\n    \"postalCode\" : \"0xCAFEBABE\",\r\n    \"city\" : \"Jakarta\" \r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8584/api/v1/customers/1/addresses",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8584",
+              "path": [
+                "api",
+                "v1",
+                "customers",
+                "1",
+                "addresses"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "ADMIN delete address for customer",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "a",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "1234",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"street\" : \"Javastreet 24\",\r\n    \"postalCode\" : \"0xCAFEBABE\",\r\n    \"city\" : \"Jakarta\" \r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8584/api/v1/customers/1/addresses/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8584",
+              "path": [
+                "api",
+                "v1",
+                "customers",
+                "1",
+                "addresses",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Courts",
+      "item": [
+        {
+          "name": "ADMIN create court",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "a",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "1234",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"courtName\" : \"new court\",\r\n    \"pricePerHourSek\" : 666\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8584/api/v1/courts",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8584",
+              "path": [
+                "api",
+                "v1",
+                "courts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "ADMIN delete court",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "a",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "1234",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "http://localhost:8584/api/v1/courts/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8584",
+              "path": [
+                "api",
+                "v1",
+                "courts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all courts",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "a",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "1234",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8584/api/v1/courts",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8584",
+              "path": [
+                "api",
+                "v1",
+                "courts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get court by id",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "a",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "1234",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8584/api/v1/courts/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8584",
+              "path": [
+                "api",
+                "v1",
+                "courts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "ADMIN update court",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "a",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "1234",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"courtName\"       : \"Cardi B Court\",\r\n  \"pricePerHourSek\" : 400.0\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8584/api/v1/courts/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8584",
+              "path": [
+                "api",
+                "v1",
+                "courts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "ANY",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    }
+  ]
+}
