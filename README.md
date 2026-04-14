@@ -3,7 +3,7 @@
 ### Author: Simon Toivola 
 
 A REST-based microservice using JSON for request/response. 
-Part of a larger microservice ecosystem
+Part of a larger microservice ecosystem @https://github.com/bamsen54/web-portal-microservice-project.git
 
 ## Ports
 
